@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Fragrances - Fuze</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+            color: #2c2c2c;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 0.3rem;
+            color: #8b6f47;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #8b6f47;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d4af37;
+        }
+
+        .page-title {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .page-title h1 {
+            font-size: 3rem;
+            color: #8b6f47;
+            margin-bottom: 1rem;
+        }
+
+        .page-title p {
+            font-size: 1.2rem;
+            color: #5c5c5c;
+        }
+
+        .filters {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .filters h3 {
+            color: #8b6f47;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-item label {
+            color: #8b6f47;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .filter-item select {
+            padding: 0.8rem;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            background: white;
+            color: #2c2c2c;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-item select:focus {
+            outline: none;
+            border-color: #8b6f47;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .products-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(139, 111, 71, 0.3);
+        }
+
+        .product-image-container {
+            width: 75%;
+            height: 150px;
+            background: #f5e6d3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            color: #8b6f47;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .product-description {
+            color: #5c5c5c;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .product-details {
+            margin-bottom: 1rem;
+        }
+
+        .product-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .product-detail span:first-child {
+            color: #8b6f47;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #d4af37 0%, #8b6f47 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 111, 71, 0.4);
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #8b6f47;
+            font-size: 1.3rem;
+        }
+
+        footer {
+            background: #2c2c2c;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-title h1 {
+                font-size: 2rem;
+            }
+
+            .filter-group {
+                grid-template-columns: 1fr;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">FUZE FRAGRANCES</div>
+        <nav class="nav-links">
+            <a href="fuze_fragrance_landing.html">Home</a>
+            <a href="fuze_fragrances_page.html">Fragrances</a>
+            <a href="fuze_hair_page.html">Hair</a>
+        </nav>
+    </header>
+
+    <div class="page-title">
+        <h1>Premium Fragrances</h1>
+        <p>Discover your signature scent</p>
+    </div>
+
+    <div class="filters">
+        <h3>Filter Products</h3>
+        <div class="filter-group">
+            <div class="filter-item">
+                <label for="price-filter">Price Range</label>
+                <select id="price-filter">
+                    <option value="all">All Prices</option>
+                    <option value="0-500">R0 - R500</option>
+                    <option value="500-1000">R500 - R1000</option>
+                    <option value="1000-2000">R1000 - R2000</option>
+                    <option value="2000+">R2000+</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="essence-filter">Essence</label>
+                <select id="essence-filter">
+                    <option value="all">All Essences</option>
+                    <option value="floral">Floral</option>
+                    <option value="woody">Woody</option>
+                    <option value="citrus">Citrus</option>
+                    <option value="oriental">Oriental</option>
+                    <option value="fresh">Fresh</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="size-filter">Size</label>
+                <select id="size-filter">
+                    <option value="all">All Sizes</option>
+                    <option value="50ml">50ml</option>
+                    <option value="100ml">100ml</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-grid" id="products-container">
+        <!-- Products will be dynamically loaded here -->
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Fuze. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Replace with your actual products and scale on by copying segments
+        const fragrances = [
+            {
+                id: 1,
+                name: "Fiero bleu man",
+                description: "A bold, woody and aromantic fragrance with a warm musky base",
+                price: 150,
+                essence: "woody",
+                size: "50ml",
+                image: "fragrances/fierobleuman50ml.jpg"
+            },
+              {
+                id: 2,
+                name: "Hayaati beau",
+                description: "Aromantic fragrance for men",
+                price: 150,
+                essence: "fresh",
+                size: "50ml",
+                image:  "fragrances/hayaatibeau50ml.jpg"
+            },
+            {
+                id: 3,
+                name: "Invicto victorious",
+                description: "oriental, mber woody fragrance meant to evoke feeling of victory, conifdence and masculinity",
+                price: 150,
+                essence: "oriental",
+                size: "50ml",
+                image:  "fragrances/invictovictorious50ml.jpg"
+            },
+            {
+                id: 4,
+                name: "Zara man",
+                description: "A bold, luxurious and sensual floral amber fragrance",
+                price: 150,
+                essence: "floral",
+                size: "50ml",
+                image:  "fragrances/zaraman50ml.jpg"
+            },
+               {
+                id: 5,
+                name: "Ophylia",
+                description: "A fresh, luxurious fragrance",
+                price: 150,
+                essence: "fresh",
+                size: "50ml",
+                image:  "fragrances/ophylia50ml.jpg"
+            },
+            {
+                id: 6,
+                name: "Invictus intense",
+                description: "A woody, amber-forward fragrance designed for men",
+                price: 150,
+                essence: "woody",
+                size: "50ml",
+                image: "fragrances/invictointense50ml.jpg"
+            },
+        ];
+
+        const WHATSAPP_NUMBER = "+27632368334"; // Edit this with your WhatsApp number
+
+        function filterProducts() {
+            const priceFilter = document.getElementById('price-filter').value;
+            const essenceFilter = document.getElementById('essence-filter').value;
+            const sizeFilter = document.getElementById('size-filter').value;
+
+            let filtered = fragrances.filter(product => {
+                let matchPrice = true;
+                let matchEssence = true;
+                let matchSize = true;
+
+                // Price filter
+                if (priceFilter !== 'all') {
+                    if (priceFilter === '0-500') {
+                        matchPrice = product.price <= 500;
+                    } else if (priceFilter === '500-1000') {
+                        matchPrice = product.price > 500 && product.price <= 1000;
+                    } else if (priceFilter === '1000-2000') {
+                        matchPrice = product.price > 1000 && product.price <= 2000;
+                    } else if (priceFilter === '2000+') {
+                        matchPrice = product.price > 2000;
+                    }
+                }
+
+                // Essence filter
+                if (essenceFilter !== 'all') {
+                    matchEssence = product.essence === essenceFilter;
+                }
+
+                // Size filter
+                if (sizeFilter !== 'all') {
+                    matchSize = product.size === sizeFilter;
+                }
+
+                return matchPrice && matchEssence && matchSize;
+            });
+
+            displayProducts(filtered);
+        }
+
+        function displayProducts(products) {
+            const container = document.getElementById('products-container');
+            
+            if (products.length === 0) {
+                container.innerHTML = '<div class="no-products">No products match your filters. Try adjusting your search.</div>';
+                return;
+            }
+
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-details">
+                            <div class="product-detail">
+                                <span>Essence:</span>
+                                <span>${product.essence.charAt(0).toUpperCase() + product.essence.slice(1)}</span>
+                            </div>
+                            <div class="product-detail">
+                                <span>Size:</span>
+                                <span>${product.size}</span>
+                            </div>
+                        </div>
+                        <div class="product-price">R${product.price}</div>
+                        <button class="buy-button" onclick="buyProduct(${product.id})">Buy Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function buyProduct(productId) {
+            const product = fragrances.find(p => p.id === productId);
+            
+            const message = `Hi! I'm interested in purchasing:
+
+*${product.name}*
+
+Description: ${product.description}
+Size: ${product.size}
+Price: R${product.price}
+
+Please let me know about availability and payment options.`;
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Event listeners for filters
+        document.getElementById('price-filter').addEventListener('change', filterProducts);
+        document.getElementById('essence-filter').addEventListener('change', filterProducts);
+        document.getElementById('size-filter').addEventListener('change', filterProducts);
+
+        // Initial display
+        displayProducts(fragrances);
+    </script>
+</body>
+</html>

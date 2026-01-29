@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuze Fragrances & Hair - The Art of Invisible Luxury</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+            color: #2c2c2c;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .sparkle-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: sparkleRotate 2s ease-in-out infinite;
+        }
+
+        .loader-text {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 0.3rem;
+            color: #8b6f47;
+            margin-bottom: 2rem;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(139, 111, 71, 0.2);
+            border-radius: 10px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #8b6f47);
+            border-radius: 10px;
+            animation: loadProgress 2s ease-in-out forwards;
+        }
+
+        @keyframes sparkleRotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header-sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .sparkle-star {
+            position: absolute;
+            font-size: 1.5rem;
+            color: #d4af37;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        .sparkle-star:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 0.3rem;
+            color: #8b6f47;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #a0826d;
+            font-style: italic;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            animation: parallaxFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes parallaxFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInLeft 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #2c2c2c;
+            line-height: 1.2;
+        }
+
+        .hero-text h2 {
+            font-size: 1.8rem;
+            color: #8b6f47;
+            margin-bottom: 1.5rem;
+            font-weight: normal;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5c5c5c;
+            margin-bottom: 2rem;
+        }
+
+        .image-container {
+            position: relative;
+            animation: slideInRight 1.2s ease-out;
+            z-index: 2;
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(139, 111, 71, 0.3);
+            transition: transform 0.5s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #d4af37 0%, #8b6f47 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 0.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(139, 111, 71, 0.4);
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 111, 71, 0.6);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #a0826d 0%, #8b6f47 100%);
+        }
+
+        .features {
+            background: white;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(139, 111, 71, 0.03) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #faf6f0 0%, #f0e8dc 100%);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(139, 111, 71, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .feature h3 {
+            color: #8b6f47;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .about {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .about:hover {
+            transform: translateY(-5px);
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            color: #8b6f47;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5c5c5c;
+            margin-bottom: 1rem;
+        }
+
+        .launch-date {
+            background: linear-gradient(135deg, #d4af37 0%, #8b6f47 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        footer {
+            background: #2c2c2c;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #d4af37;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #f5e6d3;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text h2 {
+                font-size: 1.4rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .product-image {
+                max-width: 100%;
+            }
+
+            .about h2 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="sparkle-logo">✨</div>
+            <div class="loader-text">FUZE</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-sparkles">
+            <span class="sparkle-star" style="left: 15%; top: 30%;">✨</span>
+            <span class="sparkle-star" style="left: 85%; top: 40%;">✨</span>
+        </div>
+        <div class="logo">FUZE FRAGRANCES & HAIR</div>
+        <div class="tagline">Where Elegance Meets Essence</div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>FUZE<br>FRAGRANCES<br>& HAIR</h1>
+                <h2>The Art of Invisible Luxury</h2>
+                <p>Discover the enchanting world of premium fragrances and luxurious hair. Each scent tells a story, each strand holds elegance.</p>
+                <p>Immerse yourself in luxury that lingers, in beauty that lasts forever.</p>
+                <div class="cta-buttons">
+                    <a href="fuze_fragrances_page.html" class="cta-button">Shop Fragrances</a>
+                    <a href="fuze_hair_page.html" class="cta-button secondary">Shop Hair</a>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="landingimage.jpg" width='500' height='600'%3E%3Crect fill='%23f5e6d3' width='500' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23a0826d' font-size='20' font-family='Georgia'%3EYour Product Image%3C/text%3E%3C/svg%3E" alt="Fuze Fragrances Product" class="product-image">
+            </div>
+        </div>
+    </section>
+
+    <div class="launch-date">
+        Launching: March 2026
+    </div>
+
+    <section class="features">
+        <div class="features-container">
+            <div class="feature">
+                <div class="feature-icon">
+                    <!-- Add your icon image here: <img src="your-icon.png" alt="Premium Quality"> -->
+                </div>
+                <h3>Premium Quality</h3>
+                <p>Crafted with the finest ingredients from around the world</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <!-- Add your icon image here: <img src="your-icon.png" alt="Long-Lasting"> -->
+                </div>
+                <h3>Long-Lasting</h3>
+                <p>Products that accompany you throughout your day</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <!-- Add your icon image here: <img src="your-icon.png" alt="Unique Selection"> -->
+                </div>
+                <h3>Unique Selection</h3>
+                <p>Exclusive products you won't find anywhere else</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <!-- Add your icon image here: <img src="your-icon.png" alt="Perfect Gift"> -->
+                </div>
+                <h3>Perfect Gift</h3>
+                <p>Elegant packaging for that special someone</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <h2>About Fuze</h2>
+        <p>Fuze brings you a carefully curated collection of premium fragrances and luxurious hair that represent the pinnacle of invisible luxury. We believe that true elegance doesn't announce itself—it whispers.</p>
+        <p>Each product in our collection is carefully selected to evoke emotion, create memories, and express your unique essence.</p>
+        <p>Join us on this journey where beauty meets excellence, and passion meets perfection.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Fuze Fragrances & Hair. All rights reserved.</p>
+        <p>The Art of Invisible Luxury</p>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="#" aria-label="Facebook">Facebook</a>
+            <a href="#" aria-label="Email">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hidden');
+            }, 2000);
+        });
+
+        // Scroll animations for feature cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature').forEach(function(feature) {
+            feature.style.opacity = '0';
+            feature.style.transform = 'translateY(50px)';
+            feature.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(feature);
+        });
+    </script>
+</body>
+</html>
